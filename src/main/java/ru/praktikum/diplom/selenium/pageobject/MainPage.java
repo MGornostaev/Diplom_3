@@ -5,7 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class MainPage {
     WebDriver webDriver;
@@ -19,13 +19,13 @@ public class MainPage {
     private By bunTab = By.xpath(".//span[text() = 'Булки']");
     private By ingredientsTab = By.xpath(".//span[text() = 'Начинки']");
     private By sauceTab = By.xpath(".//span[text() = 'Соусы']");
-    private By bunTabHeader = By.xpath(".//h2[text() = 'Булки']");
-    private By sauceTabHeader = By.xpath(".//h2[text() = 'Соусы']");
-    private By ingredientsTabHeader = By.xpath(".//h2[text() = 'Начинки']");
     private By makeOrderButton = By.xpath(".//button[text() = 'Оформить заказ']");
+    private By sauceTabParent = By.xpath(".//span[text() = 'Соусы']/parent::div");
+    private By bunTabParent = By.xpath(".//span[text() = 'Булки']/parent::div");
+    private By ingredientsTabParent = By.xpath(".//span[text() = 'Начинки']/parent::div");
 
     @Step
-    public AccountPage clickPersonalAccountButton(){
+    public AccountPage clickPersonalAccountButton() {
         WebElement element = webDriver.findElement(personalAccountButton);
         new WebDriverWait(webDriver, 3)
                 .until(ExpectedConditions.elementToBeClickable(element));
@@ -34,7 +34,7 @@ public class MainPage {
     }
 
     @Step
-    public HeaderPanel clickPersonalAccountButtonLogged(){
+    public HeaderPanel clickPersonalAccountButtonLogged() {
         WebElement element = webDriver.findElement(personalAccountButton);
         new WebDriverWait(webDriver, 3)
                 .until(ExpectedConditions.elementToBeClickable(element));
@@ -43,7 +43,7 @@ public class MainPage {
     }
 
     @Step
-    public LoginPage clickLoginMainPageButton(){
+    public LoginPage clickLoginMainPageButton() {
         WebElement element = webDriver.findElement(loginMainPageButton);
         new WebDriverWait(webDriver, 3)
                 .until(ExpectedConditions.elementToBeClickable(element));
@@ -52,64 +52,67 @@ public class MainPage {
     }
 
     @Step
-    public void checkMakeOrderButton(){
+    public void checkMakeOrderButton() {
         var isDisplayed = webDriver.findElement(makeOrderButton).isDisplayed();
-        assertTrue("Не найдена кнопка заказа",isDisplayed);
+        assertTrue("Не найдена кнопка заказа", isDisplayed);
     }
 
     @Step
-    public MainPage clickBunTab(){
+    public MainPage clickBunTab() {
         WebElement element = webDriver.findElement(bunTab);
-        ((JavascriptExecutor)webDriver)
+        ((JavascriptExecutor) webDriver)
                 .executeScript("arguments[0].click();", element);
+
         return new MainPage(webDriver);
     }
 
     @Step
-    public MainPage clickSauceTab(){
+    public MainPage clickSauceTab() {
         WebElement element = webDriver.findElement(sauceTab);
         new WebDriverWait(webDriver, 5)
                 .until(ExpectedConditions.elementToBeClickable(element));
         element.click();
+
         return new MainPage(webDriver);
     }
 
     @Step
-    public MainPage clickIngredientsTab(){
+    public MainPage clickIngredientsTab() {
         WebElement element = webDriver.findElement(ingredientsTab);
         new WebDriverWait(webDriver, 5)
                 .until(ExpectedConditions.elementToBeClickable(element));
         element.click();
+
         return new MainPage(webDriver);
     }
 
     @Step
-    public void checkSauceTabHeader(){
-        WebElement element = webDriver.findElement(sauceTabHeader);
-        new WebDriverWait(webDriver, 5)
-                .until(ExpectedConditions.elementToBeClickable(element));
+    public void checkSauceTabActive() {
+        WebElement element = webDriver.findElement(sauceTabParent);
 
-        var isDisplayed = element.isDisplayed();
-        assertTrue("Не найден заголовок раздела",isDisplayed);
+        String expectedResult = "tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect";
+        var actualResult = element.getAttribute("class");
+
+        assertEquals("Таб не выбран", expectedResult, actualResult);
     }
 
     @Step
-    public void checkBunTabHeader(){
-        WebElement element = webDriver.findElement(bunTabHeader);
-        new WebDriverWait(webDriver, 5)
-                .until(ExpectedConditions.elementToBeClickable(element));
+    public void checkBunTabActive() {
+        WebElement element = webDriver.findElement(bunTabParent);
 
-        var isDisplayed = element.isDisplayed();
-        assertTrue("Не найден заголовок раздела",isDisplayed);
+        String expectedResult = "tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect";
+        var actualResult = element.getAttribute("class");
+
+        assertEquals("Таб не выбран", expectedResult, actualResult);
     }
 
     @Step
-    public void checkIngredientsTabHeader(){
-        WebElement element = webDriver.findElement(ingredientsTabHeader);
-        new WebDriverWait(webDriver, 5)
-                .until(ExpectedConditions.elementToBeClickable(element));
+    public void checkIngredientsTabActive() {
+        WebElement element = webDriver.findElement(ingredientsTabParent);
 
-        var isDisplayed = element.isDisplayed();
-        assertTrue("Не найден заголовок раздела",isDisplayed);
+        String expectedResult = "tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect";
+        var actualResult = element.getAttribute("class");
+
+        assertEquals("Таб не выбран", expectedResult, actualResult);
     }
 }

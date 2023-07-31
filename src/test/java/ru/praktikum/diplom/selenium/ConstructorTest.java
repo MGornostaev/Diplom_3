@@ -10,7 +10,7 @@ public class ConstructorTest extends BaseTest{
     public void checkSwitchToSauceTab() {
         new MainPage(webDriver)
                 .clickSauceTab()
-                .checkSauceTabHeader();
+                .checkSauceTabActive();
     }
 
     @Test
@@ -19,7 +19,7 @@ public class ConstructorTest extends BaseTest{
         new MainPage(webDriver)
                 .clickSauceTab()
                 .clickBunTab()
-                .checkBunTabHeader();
+                .checkBunTabActive();
     }
 
     @Test
@@ -27,7 +27,7 @@ public class ConstructorTest extends BaseTest{
     public void checkSwitchToIngredientsTab() {
         new MainPage(webDriver)
                 .clickIngredientsTab()
-                .checkIngredientsTabHeader();
+                .checkIngredientsTabActive();
     }
 }
 
